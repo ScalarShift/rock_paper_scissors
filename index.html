@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+  </head>
+
+  <body>
+
+    <h1 style="text-align: center;">*** OPEN CONSOLE TO PLAY ***</h1>
+
+    <script>
+      function computerPlay() {
+        let computerNumber = Math.floor(100*Math.random())%3;
+        switch (computerNumber) {
+          case 0:
+          return "rock";
+          case 1:
+          return "paper";
+          case 2:
+          return "scissors";
+          default:
+          consoloe.log("Uh oh");
+        }
+      }
+      function userPlay() {
+        let userChoice = prompt("Rock, paper, or scissors: ");
+        while(userChoice.toLowerCase() !== "rock" && userChoice.toLowerCase() !== "paper" && userChoice.toLowerCase() !== "scissors") {
+          alert("Enter \"Rock\", \"Paper\", or \"Scissors\"");
+          userChoice = prompt("Rock, paper, or scissors: ");
+        }
+        return userChoice.toLowerCase();
+      }
+      function playRound(userChoice, computerChoice){
+        switch (userChoice) {
+          case "rock":
+          switch (computerChoice) {
+            case "rock":
+            return "It's a tie!"
+            case "paper":
+            return "You lose! Paper beats Rock!"
+            case "scissors":
+            return "You win! Rock beats Scissors!"
+          }
+          case "paper":
+            switch (computerChoice) {
+            case "rock":
+            return "You win! Paper beats Rock!"
+            case "paper":
+            return "It's a tie!"
+            case "scissors":
+            return "You lose! Scissors beat Paper!"
+          }
+          case "scissors":
+            switch (computerChoice) {
+            case "rock":
+            return "You lose! Rock beats Scissors!"
+            case "paper":
+            return "You win! Scissors beats Paper!"
+            case "scissors":
+            return "It's a tie!"
+          }
+        }
+      }
+      function game() {
+        let playerScore = 0;
+        let computerScore = 0;
+        let roundResult = "";
+        for(let i = 0; i < 5; i++){
+          console.log(roundResult = playRound(userPlay(), computerPlay()));
+          switch (roundResult){
+            case "You win!":
+            playerScore++;
+            break;
+            case "You lose!":
+            computerScore++;
+            break;
+          }
+        }
+        console.log((playerScore > computerScore) ? "You won the game!" : (playerScore === computerScore) ? "Tie Game!" : "You lost the game!");
+      }
+      game();
+    </script>
+  </body>
+</html>
