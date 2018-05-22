@@ -6,10 +6,41 @@
   </head>
 
   <body>
+    <div id="playerScore">Player Score: 0</div>
+    <div id="computerScore">Computer Score: 0</div>
 
-    <h1 style="text-align: center;">*** OPEN CONSOLE TO PLAY ***</h1>
+    <button class="choiceButtons" id="rock">Rock</button>
+    <button class="choiceButtons" id="paper">Paper</button>
+    <button class="choiceButtons" id="scissors">Scissors</button>
+
+    <div id="display">Rock, Paper, or Scissors?</div>
 
     <script>
+      let playerScore = 0;
+      let computerScore = 0;
+      const playerScoreDiv = document.querySelector("#playerScore");
+      const computerScoreDiv = document.querySelector("#computerScore");
+      const displayText = document.querySelector("#display");      
+
+      function updateScores(){
+        playerScoreDiv.textContent = "Player Score: " + playerScore;
+        computerScoreDiv.textContent = "Computer Score: " + computerScore;
+      }
+
+      function checkVictory(){
+        if(playerScore === 5) {
+          displayText.textContent = "You won the game!";
+          alert("YOU WON!");
+          playerScore = 0;
+          computerScore = 0;
+        } else if (computerScore === 5) {
+          displayText.textContent = "You lost the game!";
+          alert("YOU LOST!");
+          playerScore = 0;
+          computerScore = 0;
+        }
+      }
+
       function computerPlay() {
         let computerNumber = Math.floor(100*Math.random())%3;
         switch (computerNumber) {
@@ -32,54 +63,89 @@
         return userChoice.toLowerCase();
       }
       function playRound(userChoice, computerChoice){
+        console.log(userChoice + ", " + computerChoice);
         switch (userChoice) {
           case "rock":
           switch (computerChoice) {
             case "rock":
-            return "It's a tie!"
+            displayText.textContent = "It's a tie!"
+            break;
             case "paper":
-            return "You lose! Paper beats Rock!"
+            displayText.textContent = "You lose! Paper beats Rock!"
+            computerScore++;
+            break;
             case "scissors":
-            return "You win! Rock beats Scissors!"
+            displayText.textContent = "You win! Rock beats Scissors!"
+            playerScore++;
+            break;
+            default:
+            displayText.textContent = "COMPUTER ERROR!";
           }
+          break;
           case "paper":
             switch (computerChoice) {
             case "rock":
-            return "You win! Paper beats Rock!"
+            displayText.textContent = "You win! Paper beats Rock!"
+            playerScore++;
+            break;
             case "paper":
-            return "It's a tie!"
+            displayText.textContent = "It's a tie!"
+            break;
             case "scissors":
-            return "You lose! Scissors beat Paper!"
+            displayText.textContent = "You lose! Scissors beat Paper!"
+            computerScore++;
+            break;
+            default:
+            displayText.textContent = "COMPUTER ERROR!";
           }
+          break;
           case "scissors":
             switch (computerChoice) {
             case "rock":
-            return "You lose! Rock beats Scissors!"
+            displayText.textContent = "You lose! Rock beats Scissors!"
+            computerScore++;
+            break;
             case "paper":
-            return "You win! Scissors beats Paper!"
+            displayText.textContent = "You win! Scissors beats Paper!"
+            playerScore++;
+            break;
             case "scissors":
-            return "It's a tie!"
+            displayText.textContent = "It's a tie!"
+            break;
+            default:
+            displayText.textContent = "COMPUTER ERROR!";
+            break;
           }
+          updateScores();
+          checkVictory();
+          break;
+          default:
+          displayText.textContent = "USER ERROR!";
         }
       }
       function game() {
         let playerScore = 0;
         let computerScore = 0;
-        let roundResult = "";
-        for(let i = 0; i < 5; i++){
-          console.log(roundResult = playRound(userPlay(), computerPlay()));
-          switch (roundResult){
-            case "You win!":
-            playerScore++;
-            break;
-            case "You lose!":
-            computerScore++;
-            break;
-          }
+        let roundResult = "";        
+        console.log(roundResult = playRound(userPlay(), computerPlay()));
+        switch (roundResult){
+          case "You win!":
+          playerScore++;
+          break;
+          case "You lose!":
+          computerScore++;
+          break;
         }
         console.log((playerScore > computerScore) ? "You won the game!" : (playerScore === computerScore) ? "Tie Game!" : "You lost the game!");
       }
-      game();
+
+      const choiceButtons = Array.from(document.querySelectorAll(".choiceButtons"));
+      choiceButtons.forEach(choiceButton => {
+        choiceButton.addEventListener("click", choiceButton => {
+          console.log(playRound(choiceButton.target.id, computerPlay()))
+          })
+        });
+      
     </script>
   </body>
-</html>
+</html> 
