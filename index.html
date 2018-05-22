@@ -116,12 +116,12 @@
             displayText.textContent = "COMPUTER ERROR!";
             break;
           }
-          updateScores();
-          checkVictory();
           break;
           default:
           displayText.textContent = "USER ERROR!";
         }
+        updateScores();
+        checkVictory();
       }
       function game() {
         let playerScore = 0;
